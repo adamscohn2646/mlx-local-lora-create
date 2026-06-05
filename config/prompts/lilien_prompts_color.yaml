@@ -1,0 +1,202 @@
+version: 1
+trigger_phrase: art by Ephraim Moshe Lilien, Jugendstil illustration,
+compiled_from: config/prompts/lilien_prompts.yaml (color variant — medium clause removed)
+prompts:
+- id: style_woman_reading__0
+  theme_id: style_woman_reading
+  category: style_generic
+  in_calibration: true
+  tags:
+  - style_generic
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated
+    by a window reading a book, Jugendstil ornamental border
+  notes: Smoke-test subject; primary style-transfer sanity check
+  corpus_refs:
+  - Zur_guten_Stunde.jpg
+  - Reading_by_the_river.jpg
+- id: style_portrait_profile__0
+  theme_id: style_portrait_profile
+  category: style_generic
+  in_calibration: false
+  tags:
+  - style_generic
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a bearded man in profile
+    with striped head covering, dark vignette behind the figure, Jugendstil ornamental
+    border
+  corpus_refs:
+  - Lilien_figure.jpg
+  - Gabriele_d'Annunzio.jpg
+- id: jacob_wrestling__0
+  theme_id: jacob_wrestling
+  category: jewish_iconography
+  in_calibration: true
+  tags:
+  - jewish_iconography
+  - winged_figures
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes
+    with a detailed pattern wrestling, arms length, a winged figure at night beside
+    a flowing river. Palm trees in background, locked arms at the shoulder, winged
+    figure is trying to escape, the man holds on, Jugendstil ornamental border
+  corpus_refs:
+  - Lilien_Ephraim_Moses,_1923,_Jakub_i_anioł.jpg
+- id: adam_eve_garden__0
+  theme_id: adam_eve_garden
+  category: jewish_iconography
+  in_calibration: false
+  tags:
+  - jewish_iconography
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, A man and woman standing
+    nude among stylized trees, hands reaching toward each other, Jugendstil ornamental
+    border
+  corpus_refs:
+  - Lilien_Ephraim_Moses,_1923,_Adam_i_Ewa.jpg
+- id: sabbath_winged__0
+  theme_id: sabbath_winged
+  category: jewish_iconography
+  in_calibration: false
+  tags:
+  - jewish_iconography
+  - winged_figures
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, winged figures above
+    a draped central figure, mountains and stars behind, Jugendstil ornamental border
+  corpus_refs:
+  - Lilien_Ephraim_Moses,_1923,_Szabat.jpg
+- id: tarot_magician__0
+  theme_id: tarot_magician
+  category: tarot
+  in_calibration: true
+  tags:
+  - tarot
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, A man in a robe standing
+    behind a table, his arm raising a rough hewn wand, held in his fist in a majestic
+    gesture. On the table are are a plate wth a star of david inscribed on it, an
+    ornate cup and a ceremonial knife, Jugendstil ornamental border
+- id: tarot_moon__0
+  theme_id: tarot_moon
+  category: tarot
+  in_calibration: false
+  tags:
+  - tarot
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, A Full Moon hanging
+    over two towers, a dog and wolf, and a winding path between pools, Jugendstil
+    ornamental border
+- id: ornament_rosh_hashanah__0
+  theme_id: ornament_rosh_hashanah
+  category: ornament
+  in_calibration: true
+  tags:
+  - ornament
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, Ornamental border
+    for a Jewish greeting card integrating Jewish symbols such as a star of david,
+    Jugendstil ornamental border
+  corpus_refs:
+  - Lilien_Titelpagina.jpg
+  - Lilien_Frame.jpg
+- id: ornament_serpent_border__0
+  theme_id: ornament_serpent_border
+  category: ornament
+  in_calibration: false
+  tags:
+  - ornament
+  - serpent
+  - animals
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, decorative plate with
+    coiling serpents framing a central blank rectangle, Jugendstil ornamental border
+  corpus_refs:
+  - Frame_serpents.jpg
+- id: ood_astronaut__0
+  theme_id: ood_astronaut
+  category: out_of_distribution
+  in_calibration: true
+  tags:
+  - out_of_distribution
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, an astronaut standing
+    on the moon, full figure, stark silhouette, Jugendstil ornamental border
+- id: ood_steam_locomotive__0
+  theme_id: ood_steam_locomotive
+  category: out_of_distribution
+  in_calibration: false
+  tags:
+  - out_of_distribution
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a steam locomotive
+    crossing a bridge, side view, billowing smoke, Jugendstil ornamental border
+- id: composition_group_table__0
+  theme_id: composition_group_table
+  category: composition
+  in_calibration: true
+  tags:
+  - composition
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, four figures seated
+    around a table in animated discussion, Jugendstil ornamental border
+  corpus_refs:
+  - E._M._Lilien_Väter_und_Söhne-010.jpg
+- id: composition_solo_shepherd__0
+  theme_id: composition_solo_shepherd
+  category: composition
+  in_calibration: false
+  tags:
+  - composition
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, A young shepherd with
+    staff tending his flock, solo full-height figure, Jugendstil ornamental border
+- id: vampire_fantasy__0
+  theme_id: vampire_fantasy
+  category: fantasy_mythic
+  in_calibration: true
+  tags:
+  - fantasy_mythic
+  - vampire
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a gaunt vampire leaning
+    over a craftsman at a work table, heavy ink shadows, Jugendstil ornamental border
+  corpus_refs:
+  - E_M_Lilien_-_The_Vampire.jpg
+- id: vampire_fantasy__1
+  theme_id: vampire_fantasy
+  category: fantasy_mythic
+  in_calibration: true
+  tags:
+  - fantasy_mythic
+  - vampire
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a pale elongated figure
+    with long neck in a cramped interior, hunched posture, Jugendstil ornamental border
+  corpus_refs:
+  - E_M_Lilien_-_The_Vampire.jpg
+- id: satyr_woodland__0
+  theme_id: satyr_woodland
+  category: fantasy_mythic
+  in_calibration: false
+  tags:
+  - fantasy_mythic
+  - satyr
+  - animals
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a horned woodland
+    spirit with pointed ears playing a flute among dense trees, Jugendstil ornamental
+    border
+  corpus_refs:
+  - Die_Zauberflöte.jpg
+  - Die_Kommenden.jpg
+- id: devil_horned__0
+  theme_id: devil_horned
+  category: fantasy_mythic
+  in_calibration: false
+  tags:
+  - fantasy_mythic
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a large horned figure
+    with long nose, palm extended toward small human figures below, Jugendstil ornamental
+    border
+  corpus_refs:
+  - Des_Teufels_Spielzeug.jpg
+- id: eagle_companion__0
+  theme_id: eagle_companion
+  category: fantasy_mythic
+  in_calibration: false
+  tags:
+  - fantasy_mythic
+  - animals
+  - eagle
+  prompt: art by Ephraim Moshe Lilien, Jugendstil illustration, a seated figure beside
+    a large eagle on a stone ledge, solid black background, Jugendstil ornamental
+    border
+  corpus_refs:
+  - Götz_Krafft.jpg
+color_variant: true
+notes: Harness test without black ink on cream paper; unconstrained color.

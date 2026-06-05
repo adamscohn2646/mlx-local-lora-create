@@ -1,0 +1,40 @@
+# LoRA test harness — color prompt variant (no "black ink on cream paper")
+# Same sweeps/seeds as lilien_z_image_turbo.yaml; prompts from lilien_prompts_color.yaml
+#
+# Run:
+#   .venv/bin/python -m lora_test run --config config/lilien_z_image_turbo_color.yaml \
+#     --lora ~/loras/lilien_z_image_turbo_v1/lilien_z_image_turbo_v1.safetensors --mode calibration
+
+lora_name: lilien_z_image_turbo_v1_color
+
+base_model:
+  family: z_image_turbo
+  hf_id: filipstrand/Z-Image-Turbo-mflux-4bit
+  cli_command: mflux-generate-z-image-turbo
+  quantize: 4
+
+generation:
+  width: 1024
+  height: 1024
+  steps: 9
+  guidance_scale: 0.0
+  low_memory: true
+
+prompts_file: config/prompts/lilien_prompts_color.yaml
+
+sweeps:
+  calibration:
+    seeds: [42]
+    strengths: [0.0, 0.6, 0.8, 1.0, 1.2]
+    use_calibration_subset: true
+  full:
+    seeds: [42, 1337, 2718]
+    strengths: [0.0, 0.6, 0.8, 1.0]
+    use_calibration_subset: false
+  baseline:
+    seeds: [42, 1337, 2718]
+    strengths: [0.0]
+    use_calibration_subset: false
+
+output:
+  root_dir: ./test_runs

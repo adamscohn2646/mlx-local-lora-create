@@ -38,7 +38,7 @@ The adapter learns **how** Lilien draws, not a fixed catalog of subjects. You de
 **Two-step mental model:**
 
 1. **Semantic space first** — write a prompt that describes the subject, composition, and action clearly enough for the base model (Z-Image-Turbo) to parse. Think in terms of scene layout, figure count, props, and mood.
-2. **Style second** — lead with the trigger phrase and keep the medium clause (`black ink on cream paper, Jugendstil ornamental border`). The LoRA then applies Lilien’s line treatment on top of that scene.
+2. **Style second** — lead with the trigger phrase. Add `black ink on cream paper, Jugendstil ornamental border` when you want historical pen-and-ink on cream paper (see first gallery below). **Omit the ink/paper clause** to let the model choose color while the LoRA still applies Lilien’s line rhythm and ornament (see [color gallery](#optional-unconstrained-color) below).
 
 The trigger phrase anchors style; the body of the prompt anchors *what* is happening. If the scene description is vague or fights the composition, the LoRA cannot fully compensate.
 
@@ -117,9 +117,9 @@ image = model.generate_image(
 image.save("lilien_sample.png")
 ```
 
-## Calibration gallery
+## Calibration gallery (pen-and-ink prompts)
 
-All images from the **2026-06-04 calibration run** (`lora_test`, mode `calibration`). Each row is a strength sweep: **base model → LoRA 0.6 → 0.8 → 1.0 → 1.2**. Seed **42**, 1024×1024, 9 steps. Prompts match [`config/prompts/lilien_prompts.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml).
+All images from the **2026-06-04 calibration run** (`lora_test`, mode `calibration`). Each row is a strength sweep: **base model → LoRA 0.6 → 0.8 → 1.0 → 1.2**. Seed **42**, 1024×1024, 9 steps. Prompts include `black ink on cream paper` — see [`config/prompts/lilien_prompts.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml).
 
 ---
 
@@ -203,6 +203,90 @@ art by Ephraim Moshe Lilien, Jugendstil illustration, a pale elongated figure wi
 
 ---
 
+## Optional: unconstrained color
+
+The LoRA was trained on pen-and-ink originals, but you **do not have to** ask for black ink on cream paper at inference. Drop that medium clause and keep the trigger + scene + optional `Jugendstil ornamental border` — the adapter still applies Lilien’s graphic language while Z-Image-Turbo can introduce **full color**.
+
+Same calibration harness, strengths, seed, and prompts as above — only the ink/paper wording removed. Run: **2026-06-05** · prompts: [`config/prompts/lilien_prompts_color.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts_color.yaml) · config: `config/lilien_z_image_turbo_color.yaml`.
+
+**Example (color, single figure):**
+
+```bash
+mflux-generate-z-image-turbo \
+  --model filipstrand/Z-Image-Turbo-mflux-4bit \
+  --lora-paths AdamSCohn/lilien-jugendstil-z-image-turbo \
+  --lora-scales 1.0 \
+  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, Jugendstil ornamental border" \
+  --width 1024 --height 1024 --steps 9 --seed 42 \
+  --output lilien_color.png
+```
+
+### `style_woman_reading__0` · color
+
+![style_woman_reading color sweep](samples/grids_color/style_woman_reading__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, Jugendstil ornamental border
+```
+
+### `jacob_wrestling__0` · color · *try ~0.6*
+
+![jacob_wrestling color sweep](samples/grids_color/jacob_wrestling__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on, Jugendstil ornamental border
+```
+
+### `tarot_magician__0` · color
+
+![tarot_magician color sweep](samples/grids_color/tarot_magician__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, A man in a robe standing behind a table, his arm raising a rough hewn wand, held in his fist in a majestic gesture. On the table are are a plate wth a star of david inscribed on it, an ornate cup and a ceremonial knife, Jugendstil ornamental border
+```
+
+### `ornament_rosh_hashanah__0` · color
+
+![ornament_rosh_hashanah color sweep](samples/grids_color/ornament_rosh_hashanah__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, Ornamental border for a Jewish greeting card integrating Jewish symbols such as a star of david, Jugendstil ornamental border
+```
+
+### `ood_astronaut__0` · color
+
+![ood_astronaut color sweep](samples/grids_color/ood_astronaut__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, an astronaut standing on the moon, full figure, stark silhouette, Jugendstil ornamental border
+```
+
+### `composition_group_table__0` · color · *try ~0.6*
+
+![composition_group_table color sweep](samples/grids_color/composition_group_table__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, four figures seated around a table in animated discussion, Jugendstil ornamental border
+```
+
+### `vampire_fantasy__0` · color · *try ~0.6*
+
+![vampire_fantasy__0 color sweep](samples/grids_color/vampire_fantasy__0__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, a gaunt vampire leaning over a craftsman at a work table, heavy ink shadows, Jugendstil ornamental border
+```
+
+### `vampire_fantasy__1` · color
+
+![vampire_fantasy__1 color sweep](samples/grids_color/vampire_fantasy__1__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, a pale elongated figure with long neck in a cramped interior, hunched posture, Jugendstil ornamental border
+```
+
+---
+
 ## Training summary
 
 | Field | Value |
@@ -231,6 +315,7 @@ Trained on ~49 illustrations in the style of Ephraim Moshe Lilien (d. 1925). Sou
 ## Links
 
 - **Pipeline repo:** https://github.com/adamscohn2646/mlx-local-lora-create
-- **Test prompts:** https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml
+- **Test prompts (ink):** https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml
+- **Test prompts (color):** https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts_color.yaml
 - **Base model:** https://huggingface.co/filipstrand/Z-Image-Turbo-mflux-4bit
 - **mflux:** https://github.com/filipstrand/mflux
