@@ -53,7 +53,7 @@ pip install mflux
 
 mflux-generate-z-image-turbo \
   --model filipstrand/Z-Image-Turbo-mflux-4bit \
-  --lora-paths adamscohn2646/lilien-jugendstil-z-image-turbo \
+  --lora-paths AdamSCohn/lilien-jugendstil-z-image-turbo \
   --lora-scales 0.8 \
   --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, black ink on cream paper, Jugendstil ornamental border" \
   --width 1024 \
@@ -83,7 +83,7 @@ from mflux.models.z_image import ZImage
 model = ZImage(
     model_config=ModelConfig.z_image_turbo(),
     model_path="filipstrand/Z-Image-Turbo-mflux-4bit",
-    lora_paths=["adamscohn2646/lilien-jugendstil-z-image-turbo"],
+    lora_paths=["AdamSCohn/lilien-jugendstil-z-image-turbo"],
     lora_scales=[0.8],
 )
 image = model.generate_image(
@@ -153,13 +153,11 @@ Trained on ~49 illustrations in the style of Ephraim Moshe Lilien (d. 1925). Sou
 
 ## Gallery
 
-<!-- Upload sample PNGs alongside this README when publishing, then embed:
+![Woman reading by window — LoRA scale ~1.0](samples/smoke_lora.png)
 
-![style example](samples/smoke_lora.png)
+![Portrait study — LoRA scale ~1.0](samples/smoke_lora_1.png)
 
--->
-
-Samples to include at publish time: generated images from calibration at LoRA scale 0.8–1.0 (not original training scans). Suggested source: `~/loras/lilien_z_image_turbo_v1/smoke_lora.png` or picks from a `lora_test` calibration run.
+Sample images generated with mflux + Z-Image-Turbo 4-bit (not original training scans).
 
 ## Citation / links
 

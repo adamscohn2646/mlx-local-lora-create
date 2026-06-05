@@ -71,7 +71,7 @@ Requires preprocessed `output/lilien/` (49 pairs). Spec: [`LoraTrainingTest/lora
 
 | LoRA | Hugging Face | Trigger phrase |
 |------|--------------|----------------|
-| Lilien Jugendstil v1 | [`lilien-jugendstil-z-image-turbo`](https://huggingface.co/adamscohn2646/lilien-jugendstil-z-image-turbo) *(draft — not yet uploaded)* | `art by Ephraim Moshe Lilien, Jugendstil illustration,` |
+| Lilien Jugendstil v1 | [`AdamSCohn/lilien-jugendstil-z-image-turbo`](https://huggingface.co/AdamSCohn/lilien-jugendstil-z-image-turbo) | `art by Ephraim Moshe Lilien, Jugendstil illustration,` |
 
 Model card draft: [`docs/huggingface/lilien-jugendstil-z-image-turbo/README.md`](docs/huggingface/lilien-jugendstil-z-image-turbo/README.md)  
 Upload steps: [`docs/huggingface/PUBLISH.md`](docs/huggingface/PUBLISH.md)

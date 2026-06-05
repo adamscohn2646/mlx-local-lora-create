@@ -18,7 +18,13 @@ huggingface-cli repo create lilien-jugendstil-z-image-turbo --type model
 # or --private first, then make public from the Hub UI
 ```
 
-Suggested Hub ID: `adamscohn2646/lilien-jugendstil-z-image-turbo`
+Suggested Hub ID: `AdamSCohn/lilien-jugendstil-z-image-turbo`
+
+**Token:** Your HF token must have **write** access (the `mlx-local` token on this machine is read-only). Create one at [huggingface.co/settings/tokens](https://huggingface.co/settings/tokens), then:
+
+```bash
+hf auth login
+```
 
 ### 3. Stage files
 
@@ -53,7 +59,7 @@ PY
 ### 4. Upload
 
 ```bash
-huggingface-cli upload adamscohn2646/lilien-jugendstil-z-image-turbo "$STAGE" . \
+huggingface-cli upload AdamSCohn/lilien-jugendstil-z-image-turbo "$STAGE" . \
   --commit-message "Release lilien_z_image_turbo_v1 LoRA"
 ```
 
@@ -62,7 +68,7 @@ huggingface-cli upload adamscohn2646/lilien-jugendstil-z-image-turbo "$STAGE" . 
 ```bash
 mflux-generate-z-image-turbo \
   --model filipstrand/Z-Image-Turbo-mflux-4bit \
-  --lora-paths adamscohn2646/lilien-jugendstil-z-image-turbo \
+  --lora-paths AdamSCohn/lilien-jugendstil-z-image-turbo \
   --lora-scales 0.8 \
   --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, a woman reading by a window, black ink on cream paper" \
   --width 1024 --height 1024 --steps 9 --seed 42 \
