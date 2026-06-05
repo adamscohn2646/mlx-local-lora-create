@@ -2,7 +2,7 @@
 
 How `preprocess` works for the Lilien LoRA project. **Green** = built · **Yellow** = planned · **Gray** = optional/off.
 
-See also: [lora-preprocessing PRD](../stories/lora-preprocessing/PRD.md), [lora_preprocessing_spec.md](../../lora_preprocessing_spec.md).
+See also: [lora_preprocessing_spec.md](../../lora_preprocessing_spec.md), [new-dataset guide](../guides/new-dataset.md).
 
 ---
 

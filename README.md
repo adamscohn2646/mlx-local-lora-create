@@ -7,14 +7,13 @@ Ship repo for LoRA training-data preprocessing on Apple Silicon (CLI + HTTP). Ex
 | Doc | Purpose |
 |-----|---------|
 | [`docs/guides/new-dataset.md`](docs/guides/new-dataset.md) | **CLI guide — preprocess a new image folder** |
-| [`PROCESS.md`](PROCESS.md) | Story lifecycle and verify gates |
-| [`AGENTS.md`](AGENTS.md) | Cursor agent rules |
-| [`docs/stories/STATUS.md`](docs/stories/STATUS.md) | Story index |
-| [`lora_preprocessing_spec.md`](lora_preprocessing_spec.md) | Source spec for first feature |
+| [`lora_preprocessing_spec.md`](lora_preprocessing_spec.md) | Preprocessing pipeline spec |
+| [`LoraTrainingTest/lora_training_spec.md`](LoraTrainingTest/lora_training_spec.md) | Training wrapper spec |
+| [`docs/training-cards/lilien_z_image_turbo_v1.md`](docs/training-cards/lilien_z_image_turbo_v1.md) | Reference training run |
 
-## First story
+## Preprocessing pipeline
 
-**`lora-preprocessing`** — staged pipeline: inventory → normalize → caption (VLM) → optional img2img → manifest assembly. **Done** (2026-05-25). See [`docs/stories/lora-preprocessing/`](docs/stories/lora-preprocessing/).
+Staged pipeline: inventory → normalize → caption (VLM) → optional img2img → manifest assembly. Guide: [`docs/guides/new-dataset.md`](docs/guides/new-dataset.md).
 
 ### Quick start (new dataset)
 
@@ -54,9 +53,9 @@ Full walkthrough: [`docs/guides/new-dataset.md`](docs/guides/new-dataset.md)
 
 Diagram: [`docs/diagrams/preprocess-pipeline.md`](docs/diagrams/preprocess-pipeline.md)
 
-## LoRA training (in progress)
+## LoRA training
 
-Story [`lora-training`](docs/stories/lora-training/) — mflux wrapper: validate → prepare → train → finalize.
+mflux wrapper: validate → prepare → train → finalize. Spec: [`LoraTrainingTest/lora_training_spec.md`](LoraTrainingTest/lora_training_spec.md).
 
 ```bash
 .venv/bin/pip install -e ".[dev]"   # includes mflux>=0.16.8
@@ -79,7 +78,7 @@ Upload steps: [`docs/huggingface/PUBLISH.md`](docs/huggingface/PUBLISH.md)
 
 ## Golden path (deferred)
 
-Workflow executor bar: [`docs/golden-paths/workflow-v1.md`](docs/golden-paths/workflow-v1.md). Story [`workflow-golden-path-v1`](docs/stories/workflow-golden-path-v1/) is backlog until lora-preprocessing is Done.
+Workflow executor design: [`docs/golden-paths/workflow-v1.md`](docs/golden-paths/workflow-v1.md).
 
 ## Skills
 

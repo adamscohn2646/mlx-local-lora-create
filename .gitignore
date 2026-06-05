@@ -42,3 +42,6 @@ build/
 # Coverage
 .coverage
 htmlcov/
+
+# Internal story tracking (PRD/RFC/IMPLEMENTATION) — not for public repo
+docs/stories/

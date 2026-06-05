@@ -11,7 +11,7 @@ Run card for the **completed** production train on Lilien → Z-Image-Turbo. Use
 | Field | Value |
 |-------|-------|
 | LoRA name | `lilien_z_image_turbo_v1` |
-| Story | [`lora-training`](../stories/lora-training/PRD.md) |
+| Story | [`LoraTrainingTest/lora_training_spec.md`](../../LoraTrainingTest/lora_training_spec.md) |
 | Ship config | [`config/lilien_z_image_turbo_v1.yaml`](../../config/lilien_z_image_turbo_v1.yaml) |
 | mflux JSON (resolved) | `~/loras/lilien_z_image_turbo_v1/mflux_train.json` |
 | Launch command | `~/loras/lilien_z_image_turbo_v1/launch.sh` |
@@ -124,7 +124,7 @@ Matches [mflux Z-Image-Turbo training example](https://github.com/filipstrand/mf
 |-------|-------|
 | `monitoring` in JSON | **absent** (null) |
 | In-run preview images | **Off** (avoids extra VRAM from 1024×1024 gens) |
-| Harness after train | [`lora-test-harness`](../stories/lora-test-harness/PRD.md) — `config/lilien_z_image_turbo.yaml` (planned) |
+| Harness after train | [`LoraTrainingTest/test_harness_spec.md`](../../LoraTrainingTest/test_harness_spec.md) — `config/lilien_z_image_turbo.yaml` |
 
 ---
 
