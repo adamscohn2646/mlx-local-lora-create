@@ -1,0 +1,52 @@
+# Lilien style LoRA — Z-Image-Turbo (production v1)
+# Train: python -m train prepare && python -m train train --config config/lilien_z_image_turbo_v1.yaml
+
+lora_name: lilien_z_image_turbo_v1
+description: >
+  Lilien Jugendstil illustration style. 49 training images,
+  three-part VLM captions (v3), trigger phrase
+  "art by Ephraim Moshe Lilien, Jugendstil illustration,"
+
+base_model:
+  family: z_image_turbo
+  hf_id: filipstrand/Z-Image-Turbo-mflux-4bit
+  local_path: null
+  # Pre-quantized HF weights — leave null in mflux JSON (see train/mflux_cmd.py)
+  quantize: null
+
+training_data:
+  preprocessed_dir: ./output/lilien
+  resolution: 1024
+  trigger_phrase: "art by Ephraim Moshe Lilien, Jugendstil illustration,"
+
+lora:
+  rank: 8
+  alpha: 8
+  # turbo_light = mflux Z-Image-Turbo example (blocks 15-30, attn q/k/v only)
+  target_modules: turbo_light
+
+optimization:
+  learning_rate: 1.0e-4
+  batch_size: 1
+  max_train_steps: 2000
+  # Maps to mflux JSON "low_ram": true — disk-backed latent cache (real RAM saver)
+  gradient_checkpointing: true
+  optimizer: adamw
+
+checkpointing:
+  save_every_steps: 500
+  keep_latest_n: 5
+  output_dir: ~/loras/lilien_z_image_turbo_v1
+
+previews:
+  enabled: false
+  generate_every_steps: 500
+  seed: 42
+  prompts: []
+
+logging:
+  log_loss_every_steps: 10
+  log_stats_every_steps: 100
+
+handoff:
+  recommended_test_config: config/lilien_z_image_turbo.yaml

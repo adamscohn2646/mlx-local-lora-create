@@ -1,0 +1,36 @@
+# LoRA test harness — Z-Image-Turbo / Lilien v1
+# Plan: python -m lora_test plan --config config/lilien_z_image_turbo.yaml --lora <path> --mode calibration
+
+lora_name: lilien_z_image_turbo_v1
+
+base_model:
+  family: z_image_turbo
+  hf_id: filipstrand/Z-Image-Turbo-mflux-4bit
+  cli_command: mflux-generate-z-image-turbo
+  quantize: 4
+
+generation:
+  width: 1024
+  height: 1024
+  steps: 9
+  guidance_scale: 0.0
+  low_memory: true
+
+prompts_file: config/prompts/lilien_prompts.yaml
+
+sweeps:
+  calibration:
+    seeds: [42]
+    strengths: [0.0, 0.6, 0.8, 1.0, 1.2]
+    use_calibration_subset: true
+  full:
+    seeds: [42, 1337, 2718]
+    strengths: [0.0, 0.6, 0.8, 1.0]
+    use_calibration_subset: false
+  baseline:
+    seeds: [42, 1337, 2718]
+    strengths: [0.0]
+    use_calibration_subset: false
+
+output:
+  root_dir: ./test_runs

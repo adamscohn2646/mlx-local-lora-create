@@ -1,0 +1,159 @@
+version: 1
+trigger_phrase: "art by Ephraim Moshe Lilien, Jugendstil illustration,"
+# Scene templates: subject only. compile-prompts appends
+# "black ink on cream paper, Jugendstil ornamental border" (smoke-test convention).
+
+themes:
+  - id: style_woman_reading
+    category: style_generic
+    in_calibration: true
+    tags: [style_generic]
+    corpus_refs:
+      - Zur_guten_Stunde.jpg
+      - Reading_by_the_river.jpg
+    scene_templates:
+      - "a young woman seated by a window reading a book"
+    notes: Smoke-test subject; primary style-transfer sanity check
+
+  - id: style_portrait_profile
+    category: style_generic
+    in_calibration: false
+    tags: [style_generic]
+    corpus_refs:
+      - Lilien_figure.jpg
+      - Gabriele_d'Annunzio.jpg
+    scene_templates:
+      - "a bearded man in profile with striped head covering, dark vignette behind the figure"
+
+  - id: jacob_wrestling
+    category: jewish_iconography
+    in_calibration: true
+    tags: [jewish_iconography, winged_figures]
+    corpus_refs:
+      - Lilien_Ephraim_Moses,_1923,_Jakub_i_anioł.jpg
+    scene_templates:
+      - "A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on."
+
+  - id: adam_eve_garden
+    category: jewish_iconography
+    in_calibration: false
+    tags: [jewish_iconography]
+    corpus_refs:
+      - Lilien_Ephraim_Moses,_1923,_Adam_i_Ewa.jpg
+    scene_templates:
+      - "A man and woman standing nude among stylized trees, hands reaching toward each other"
+
+  - id: sabbath_winged
+    category: jewish_iconography
+    in_calibration: false
+    tags: [jewish_iconography, winged_figures]
+    corpus_refs:
+      - Lilien_Ephraim_Moses,_1923,_Szabat.jpg
+    scene_templates:
+      - "winged figures above a draped central figure, mountains and stars behind"
+
+  - id: tarot_magician
+    category: tarot
+    in_calibration: true
+    tags: [tarot]
+    corpus_refs: []
+    scene_templates:
+      - "A man in a robe standing behind a table, his arm raising a rough hewn wand, held in his fist in a majestic gesture. On the table are are a plate wth a star of david inscribed on it, an ornate cup and a ceremonial knife." 
+
+  - id: tarot_moon
+    category: tarot
+    in_calibration: false
+    tags: [tarot]
+    corpus_refs: []
+    scene_templates:
+      - "A Full Moon hanging over two towers, a dog and wolf, and a winding path between pools"
+
+  - id: ornament_rosh_hashanah
+    category: ornament
+    in_calibration: true
+    tags: [ornament]
+    corpus_refs:
+      - Lilien_Titelpagina.jpg
+      - Lilien_Frame.jpg
+    scene_templates:
+      - "Ornamental border for a Jewish greeting card integrating Jewish symbols such as a star of david"
+
+  - id: ornament_serpent_border
+    category: ornament
+    in_calibration: false
+    tags: [ornament, serpent, animals]
+    corpus_refs:
+      - Frame_serpents.jpg
+    scene_templates:
+      - "decorative plate with coiling serpents framing a central blank rectangle"
+
+  - id: ood_astronaut
+    category: out_of_distribution
+    in_calibration: true
+    tags: [out_of_distribution]
+    corpus_refs: []
+    scene_templates:
+      - "an astronaut standing on the moon, full figure, stark silhouette"
+
+  - id: ood_steam_locomotive
+    category: out_of_distribution
+    in_calibration: false
+    tags: [out_of_distribution]
+    corpus_refs: []
+    scene_templates:
+      - "a steam locomotive crossing a bridge, side view, billowing smoke"
+
+  - id: composition_group_table
+    category: composition
+    in_calibration: true
+    tags: [composition]
+    corpus_refs:
+      - E._M._Lilien_Väter_und_Söhne-010.jpg
+    scene_templates:
+      - "four figures seated around a table in animated discussion"
+
+  - id: composition_solo_shepherd
+    category: composition
+    in_calibration: false
+    tags: [composition]
+    corpus_refs: []
+    scene_templates:
+      - "A young shepherd with staff tending his flock, solo full-height figure"
+
+  - id: vampire_fantasy
+    category: fantasy_mythic
+    in_calibration: true
+    tags: [fantasy_mythic, vampire]
+    corpus_refs:
+      - E_M_Lilien_-_The_Vampire.jpg
+    scene_templates:
+      - "a gaunt vampire leaning over a craftsman at a work table, heavy ink shadows"
+      - "a pale elongated figure with long neck in a cramped interior, hunched posture"
+
+  - id: satyr_woodland
+    category: fantasy_mythic
+    in_calibration: false
+    tags: [fantasy_mythic, satyr, animals]
+    corpus_refs:
+      - Die_Zauberflöte.jpg
+      - Die_Kommenden.jpg
+    scene_templates:
+      - "a horned woodland spirit with pointed ears playing a flute among dense trees"
+
+  - id: devil_horned
+    category: fantasy_mythic
+    in_calibration: false
+    tags: [fantasy_mythic]
+    corpus_refs:
+      - Des_Teufels_Spielzeug.jpg
+    scene_templates:
+      - "a large horned figure with long nose, palm extended toward small human figures below"
+
+  - id: eagle_companion
+    category: fantasy_mythic
+    in_calibration: false
+    tags: [fantasy_mythic, animals, eagle]
+    corpus_refs:
+      - Götz_Krafft.jpg
+    scene_templates:
+      - "a seated figure beside a large eagle on a stone ledge, solid black background"

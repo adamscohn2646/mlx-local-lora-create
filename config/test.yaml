@@ -1,0 +1,50 @@
+# Small fixture corpus for smoke tests and trying the CLI end-to-end.
+# Source: tests/fixtures/corpus/ (8 files, 2 GOOD at default rules)
+
+project:
+  name: test
+  description: "Fixture corpus — inventory/normalize/assemble smoke test"
+
+paths:
+  source_dir: "./tests/fixtures/corpus"
+  work_dir: "./work/test"
+  output_dir: "./output/test"
+
+quality_rules:
+  min_short_side: 512
+  preferred_short_side: 1024
+  max_aspect_ratio: 2.0
+  accepted_extensions: [".jpg", ".jpeg", ".png"]
+  skipped_extensions: [".tif", ".tiff", ".svg"]
+  require_rgb: true
+
+captioning:
+  vlm_model: "mlx-community/Qwen3-VL-4B-Instruct-8bit"
+  vlm_params:
+    temperature: 0.2
+    top_p: 0.95
+    top_k: 20
+    max_tokens: 2048
+    repetition_penalty: 1.0
+    min_p: 0.0
+    vlm_max_long_side: 1024
+  artist_full_name: "Test Artist"
+  artist_dates: "1900-1950"
+  artist_origin: "Example"
+  style_tradition: "Example Style"
+  medium_descriptor: "pen-and-ink illustration"
+  trigger_phrase: "art by Test Artist, example style illustration,"
+  prompt_version: v3
+  medium_clause: >-
+    black ink illustration on textured cream paper with visible grain,
+    varying line weights, cross-hatching and stippling for shading
+  prompt_target_word_count: 500
+  caption_target_word_count: [40, 110]
+
+img2img:
+  enabled: false
+
+output:
+  format: "jpg"
+  jpeg_quality: 95
+  manifest_name: "manifest.jsonl"

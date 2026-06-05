@@ -1,0 +1,51 @@
+# Isidor Kaufmann caption batch — prompt v3
+# Same pipeline as lilien-caption-v3; outputs go to work/kaufmann/captions_v3/
+
+project:
+  name: kaufmann
+  description: "Genre-painting style LoRA from the work of Isidor Kaufmann"
+
+paths:
+  source_dir: "/path/to/your/dataset/IsidorKaufman"
+  work_dir: "./work/kaufmann"
+  output_dir: "./output/kaufmann"
+
+quality_rules:
+  min_short_side: 512
+  preferred_short_side: 1024
+  max_aspect_ratio: 2.0
+  accepted_extensions: [".jpg", ".jpeg", ".png"]
+  skipped_extensions: [".tif", ".tiff", ".svg"]
+  require_rgb: true
+
+captioning:
+  vlm_model: "mlx-community/Qwen3-VL-4B-Instruct-8bit"
+  vlm_params:
+    temperature: 0.2
+    top_p: 0.95
+    top_k: 20
+    max_tokens: 2048
+    repetition_penalty: 1.0
+    min_p: 0.0
+    vlm_max_long_side: 1024
+  artist_full_name: "Isidor Kaufmann"
+  artist_dates: "1853-1921"
+  artist_origin: "Austro-Hungarian Jewish"
+  style_tradition: "genre painting"
+  medium_descriptor: "oil-on-canvas painter"
+  trigger_phrase: "art by Isidor Kaufmann, genre painting,"
+  prompt_version: v3
+  medium_clause: >-
+    oil paint on canvas or wood panel with smooth polished finish,
+    warm luminous color, fine controlled brushwork, academic realism,
+    meticulous detail in fabrics, faces, and ritual objects
+  prompt_target_word_count: 500
+  caption_target_word_count: [85, 110]
+
+img2img:
+  enabled: false
+
+output:
+  format: "jpg"
+  jpeg_quality: 95
+  manifest_name: "manifest.jsonl"

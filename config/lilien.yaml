@@ -1,0 +1,52 @@
+# Ephraim Moshe Lilien — Jugendstil style LoRA preprocessing
+# Source corpus lives outside the repo (read-only).
+
+project:
+  name: lilien
+  description: "Jugendstil style LoRA from the work of Ephraim Moshe Lilien"
+
+paths:
+  source_dir: "/path/to/your/dataset/EphraimMosheLilien"
+  work_dir: "./work/lilien"
+  output_dir: "./output/lilien"
+
+quality_rules:
+  min_short_side: 512
+  preferred_short_side: 1024
+  max_aspect_ratio: 2.0
+  accepted_extensions: [".jpg", ".jpeg", ".png"]
+  skipped_extensions: [".tif", ".tiff", ".svg"]
+  require_rgb: true
+
+captioning:
+  vlm_model: "mlx-community/Qwen3-VL-4B-Instruct-8bit"
+  vlm_params:
+    temperature: 0.2
+    top_p: 0.95
+    top_k: 20
+    max_tokens: 2048
+    repetition_penalty: 1.0
+    min_p: 0.0
+    vlm_max_long_side: 1024
+  artist_full_name: "Ephraim Moshe Lilien"
+  artist_dates: "1874-1925"
+  artist_origin: "Austro-Hungarian Jewish"
+  style_tradition: "Jugendstil"
+  medium_descriptor: "pen-and-ink illustration"
+  trigger_phrase: "art by Ephraim Moshe Lilien, Jugendstil illustration,"
+  prompt_version: v1
+  prompt_target_word_count: 500
+  caption_target_word_count: [40, 80]
+
+img2img:
+  enabled: false
+  base_model: "AITRADER/FLUX2-klein-9B-mlx-4bit"
+  strength: 0.65
+  steps: 8
+  guidance_scale: 3.5
+  output_size: [1024, 1024]
+
+output:
+  format: "jpg"
+  jpeg_quality: 95
+  manifest_name: "manifest.jsonl"

@@ -1,0 +1,22 @@
+{
+  "workflow_id": "golden-path-v1",
+  "schema_version": "1",
+  "description": "Bootstrap example — two steps for ship repo golden path. Implement executor against this shape.",
+  "steps": [
+    {
+      "step_id": "ping",
+      "type": "noop",
+      "params": {
+        "message": "golden-path-v1 step 1"
+      }
+    },
+    {
+      "step_id": "echo-reply",
+      "type": "chat",
+      "params": {
+        "prompt": "Reply with exactly: GOLDEN_OK",
+        "model_id": "REPLACE_WITH_SMALLEST_CHAT_MODEL_OR_MOCK"
+      }
+    }
+  ]
+}

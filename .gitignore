@@ -1,0 +1,44 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.DS_Store
+
+work/
+output/
+LOGS/
+**/.vlm_cache/
+
+# LoRA test harness outputs (generated PNGs, grids, HTML)
+test_runs/
+
+# Secrets / local env
+.env
+.env.*
+
+# Training artifacts (if output_dir ever set inside repo)
+checkpoints/
+mflux_workspace*/
+*.log
+
+# Weights (keep test mock)
+*.safetensors
+!tests/fixtures/mock_lora.safetensors
+
+# HuggingFace / MLX caches if ever pointed at repo
+.cache/
+models/
+
+*.egg-info/
+dist/
+build/
+
+# Editor
+.idea/
+.vscode/
+
+# Coverage
+.coverage
+htmlcov/
