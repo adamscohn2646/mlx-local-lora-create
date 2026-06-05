@@ -68,6 +68,15 @@ Story [`lora-training`](docs/stories/lora-training/) — mflux wrapper: validate
 
 Requires preprocessed `output/lilien/` (49 pairs). Spec: [`LoraTrainingTest/lora_training_spec.md`](LoraTrainingTest/lora_training_spec.md).
 
+## Published models
+
+| LoRA | Hugging Face | Trigger phrase |
+|------|--------------|----------------|
+| Lilien Jugendstil v1 | [`lilien-jugendstil-z-image-turbo`](https://huggingface.co/adamscohn2646/lilien-jugendstil-z-image-turbo) *(draft — not yet uploaded)* | `art by Ephraim Moshe Lilien, Jugendstil illustration,` |
+
+Model card draft: [`docs/huggingface/lilien-jugendstil-z-image-turbo/README.md`](docs/huggingface/lilien-jugendstil-z-image-turbo/README.md)  
+Upload steps: [`docs/huggingface/PUBLISH.md`](docs/huggingface/PUBLISH.md)
+
 ## Golden path (deferred)
 
 Workflow executor bar: [`docs/golden-paths/workflow-v1.md`](docs/golden-paths/workflow-v1.md). Story [`workflow-golden-path-v1`](docs/stories/workflow-golden-path-v1/) is backlog until lora-preprocessing is Done.
@@ -75,3 +84,7 @@ Workflow executor bar: [`docs/golden-paths/workflow-v1.md`](docs/golden-paths/wo
 ## Skills
 
 Project skills live in [`.cursor/skills/`](.cursor/skills/).
+
+## License
+
+MIT — see [LICENSE](LICENSE).
