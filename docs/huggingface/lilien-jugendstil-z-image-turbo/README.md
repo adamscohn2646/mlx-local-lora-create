@@ -10,6 +10,7 @@ tags:
   - art
   - illustration
   - jugendstil
+  - art-nouveau
   - pen-and-ink
 pipeline_tag: text-to-image
 library_name: mflux
@@ -17,9 +18,41 @@ library_name: mflux
 
 # Lilien Jugendstil — Z-Image-Turbo LoRA (MLX)
 
-A style LoRA for [Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo) trained with [mflux](https://github.com/filipstrand/mflux) on Apple Silicon (MLX). Generates pen-and-ink Jugendstil illustrations in the tradition of **Ephraim Moshe Lilien** (1874–1925).
+A style LoRA for [Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo) trained with [mflux](https://github.com/filipstrand/mflux) on Apple Silicon (MLX).
 
 **Training pipeline (open source):** [github.com/adamscohn2646/mlx-local-lora-create](https://github.com/adamscohn2646/mlx-local-lora-create)
+
+## Art style
+
+This LoRA captures the pen-and-ink illustration work of **Ephraim Moshe Lilien** (1874–1925), a central figure of **Jugendstil** — the German branch of **Art Nouveau**. Expect:
+
+- Black ink on textured cream paper, visible grain
+- Flowing ornamental borders and Jugendstil / Art Nouveau line rhythm
+- Varying line weights, cross-hatching, and stippling for shade
+- Figurative scenes, symbolic composition, and decorative plate design
+
+The adapter learns **how** Lilien draws, not a fixed catalog of subjects. You describe the scene; the LoRA steers rendering toward his graphic language.
+
+## How to prompt
+
+**Two-step mental model:**
+
+1. **Semantic space first** — write a prompt that describes the subject, composition, and action clearly enough for the base model (Z-Image-Turbo) to parse. Think in terms of scene layout, figure count, props, and mood.
+2. **Style second** — lead with the trigger phrase and keep the medium clause (`black ink on cream paper, Jugendstil ornamental border`). The LoRA then applies Lilien’s line treatment on top of that scene.
+
+The trigger phrase anchors style; the body of the prompt anchors *what* is happening. If the scene description is vague or fights the composition, the LoRA cannot fully compensate.
+
+### LoRA strength
+
+Calibration grids below sweep **base → 0.6 → 0.8 → 1.0 → 1.2** (left to right).
+
+| Scene type | Suggested strength | Why |
+|------------|-------------------|-----|
+| **Single figure**, portrait, ornament, heavy ink | **0.8 – 1.0** | Strongest Lilien line weight and border treatment |
+| **Two or more figures interacting** (wrestling, group scenes, vampire over craftsman) | **~0.6** | At 1.0+ the style layer can overwhelm pose and spatial relationships; figures merge or confuse |
+| **Out-of-distribution subjects** (astronaut, modern objects) | **0.6 – 0.8** | Style transfers cleanly; very high strength can over-ornament |
+
+Expect to tweak prompts and strength together — especially for multi-actor scenes.
 
 ## Model files
 
@@ -28,8 +61,6 @@ A style LoRA for [Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo
 | `lilien_z_image_turbo_v1.safetensors` | Final adapter (~11 MB), step 2009 |
 
 ## Trigger phrase
-
-Include this at the start of your prompt:
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration,
@@ -40,7 +71,7 @@ art by Ephraim Moshe Lilien, Jugendstil illustration,
 | Parameter | Value |
 |-----------|-------|
 | Base model | `filipstrand/Z-Image-Turbo-mflux-4bit` |
-| LoRA scale | **0.8–1.0** (calibration sweeps 0.6–1.2; 1.0 is the reference strength) |
+| LoRA scale | **0.6** (multi-figure) · **1.0** (single-figure / heavy style) |
 | Resolution | 1024 × 1024 |
 | Steps | 9 |
 | Guidance | 0.0 |
@@ -55,23 +86,9 @@ mflux-generate-z-image-turbo \
   --model filipstrand/Z-Image-Turbo-mflux-4bit \
   --lora-paths AdamSCohn/lilien-jugendstil-z-image-turbo \
   --lora-scales 1.0 \
-  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on, black ink on cream paper, Jugendstil ornamental border" \
-  --width 1024 \
-  --height 1024 \
-  --steps 9 \
-  --seed 42 \
+  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, black ink on cream paper, Jugendstil ornamental border" \
+  --width 1024 --height 1024 --steps 9 --seed 42 \
   --output lilien_sample.png
-```
-
-Local file instead of Hub path:
-
-```bash
-mflux-generate-z-image-turbo \
-  --model filipstrand/Z-Image-Turbo-mflux-4bit \
-  --lora-paths /path/to/lilien_z_image_turbo_v1.safetensors \
-  --lora-scales 1.0 \
-  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, ..." \
-  --width 1024 --height 1024 --steps 9
 ```
 
 ## Usage (Python API)
@@ -100,51 +117,91 @@ image = model.generate_image(
 image.save("lilien_sample.png")
 ```
 
-## Example prompts
+## Calibration gallery
 
-These match the **calibration subset** in [`config/prompts/lilien_prompts.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml) (compiled from `lilien_themes.yaml`). Gallery images below were generated from this same set.
+All images from the **2026-06-04 calibration run** (`lora_test`, mode `calibration`). Each row is a strength sweep: **base model → LoRA 0.6 → 0.8 → 1.0 → 1.2**. Seed **42**, 1024×1024, 9 steps. Prompts match [`config/prompts/lilien_prompts.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml).
 
-**style_generic — `style_woman_reading__0`**
+---
+
+### `style_woman_reading__0` · style_generic · *single figure — try 1.0*
+
+![style_woman_reading strength sweep](samples/grids/style_woman_reading__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**jewish_iconography — `jacob_wrestling__0`**
+---
+
+### `jacob_wrestling__0` · jewish_iconography · *two figures interacting — try ~0.6*
+
+![jacob_wrestling strength sweep](samples/grids/jacob_wrestling__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**tarot — `tarot_magician__0`**
+---
+
+### `tarot_magician__0` · tarot · *single figure — try 1.0*
+
+![tarot_magician strength sweep](samples/grids/tarot_magician__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, A man in a robe standing behind a table, his arm raising a rough hewn wand, held in his fist in a majestic gesture. On the table are are a plate wth a star of david inscribed on it, an ornate cup and a ceremonial knife, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**ornament — `ornament_rosh_hashanah__0`**
+---
+
+### `ornament_rosh_hashanah__0` · ornament · *single figure — try 1.0*
+
+![ornament_rosh_hashanah strength sweep](samples/grids/ornament_rosh_hashanah__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, Ornamental border for a Jewish greeting card integrating Jewish symbols such as a star of david, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**out_of_distribution — `ood_astronaut__0`**
+---
+
+### `ood_astronaut__0` · out_of_distribution · *single figure — try 0.6–0.8*
+
+![ood_astronaut strength sweep](samples/grids/ood_astronaut__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, an astronaut standing on the moon, full figure, stark silhouette, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**composition — `composition_group_table__0`**
+---
+
+### `composition_group_table__0` · composition · *four figures — try ~0.6*
+
+![composition_group_table strength sweep](samples/grids/composition_group_table__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, four figures seated around a table in animated discussion, black ink on cream paper, Jugendstil ornamental border
 ```
 
-**fantasy_mythic — `vampire_fantasy__0`**
+---
+
+### `vampire_fantasy__0` · fantasy_mythic · *two figures interacting — try ~0.6*
+
+![vampire_fantasy__0 strength sweep](samples/grids/vampire_fantasy__0__grid.png)
 
 ```
 art by Ephraim Moshe Lilien, Jugendstil illustration, a gaunt vampire leaning over a craftsman at a work table, heavy ink shadows, black ink on cream paper, Jugendstil ornamental border
 ```
+
+---
+
+### `vampire_fantasy__1` · fantasy_mythic · *single figure — try 1.0*
+
+![vampire_fantasy__1 strength sweep](samples/grids/vampire_fantasy__1__grid.png)
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, a pale elongated figure with long neck in a cramped interior, hunched posture, black ink on cream paper, Jugendstil ornamental border
+```
+
+---
 
 ## Training summary
 
@@ -157,56 +214,23 @@ art by Ephraim Moshe Lilien, Jugendstil illustration, a gaunt vampire leaning ov
 | Optimizer | AdamW, lr 1e-4, batch size 1 |
 | Steps | 2009 (41 epochs × 49 images) |
 | Resolution | 1024 |
-| Training adapter | `ostris/zimage_turbo_training_adapter` (auto-loaded by mflux for turbo) |
-| Hardware | Apple Silicon, ≥48 GB unified memory |
-| Wall time | ~13h 55m |
 | Trained | 2026-05-26 |
 | mflux version | 0.17.5 |
 
-Full run card: [training card in GitHub repo](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/docs/training-cards/lilien_z_image_turbo_v1.md)
-
-## What this LoRA is good at
-
-- Pen-and-ink illustration on textured cream paper
-- Jugendstil / Art Nouveau line weight and ornament
-- Figurative scenes, Jewish iconography, decorative borders
-- Black-and-white ink aesthetics with cross-hatching and stippling
-
 ## Limitations
 
-- **Style transfer, not subject memorization** — works best when the trigger phrase leads the prompt; arbitrary subjects may look stylized but not historically specific.
-- **MLX / Apple Silicon only** — this adapter was trained and tested with mflux; Diffusers / CUDA workflows are untested.
-- **Training data not included** — source scans are not published with this release.
-- Strengths above **1.0** can over-saturate line weight or ornament; calibrate with your prompts.
+- **Style transfer, not subject memorization** — describe the scene; the LoRA applies graphic treatment.
+- **Multi-actor scenes** — at high strength the adapter can confuse interacting figures; lower strength and explicit pose language help.
+- **MLX / Apple Silicon only** — trained and tested with mflux; Diffusers / CUDA untested.
+- **Training data not included** — source scans are not published.
 
 ## Training data & copyright
 
-Trained on ~49 illustrations in the style of Ephraim Moshe Lilien (d. 1925). Source images and captions are **not** distributed with this model. The adapter weights are published under the [MIT License](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/LICENSE). Respect the base model license ([Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo)) and applicable law when generating and sharing outputs.
+Trained on ~49 illustrations in the style of Ephraim Moshe Lilien (d. 1925). Source images and captions are **not** distributed. Weights: [MIT License](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/LICENSE). Respect the [Z-Image-Turbo](https://huggingface.co/Tongyi-MAI/Z-Image-Turbo) license and applicable law.
 
-## Gallery
-
-Calibration harness run (`lora_test`, mode `calibration`), **LoRA strength 1.0**, seed **42**, 1024×1024, 9 steps. Not original training scans.
-
-| | |
-|---|---|
-| ![style_woman_reading](samples/style_woman_reading.png) | ![jacob_wrestling](samples/jacob_wrestling.png) |
-| `style_woman_reading__0` | `jacob_wrestling__0` |
-| ![tarot_magician](samples/tarot_magician.png) | ![ornament_rosh_hashanah](samples/ornament_rosh_hashanah.png) |
-| `tarot_magician__0` | `ornament_rosh_hashanah__0` |
-| ![ood_astronaut](samples/ood_astronaut.png) | ![vampire_fantasy](samples/vampire_fantasy.png) |
-| `ood_astronaut__0` | `vampire_fantasy__0` |
-| ![composition_group_table](samples/composition_group_table.png) | |
-| `composition_group_table__0` | |
-
-**Strength sweep** (base → 0.6 → 0.8 → 1.0 → 1.2):
-
-![Jacob wrestling strength sweep](samples/grids/jacob_wrestling_strength_sweep.png)
-
-![Woman reading strength sweep](samples/grids/style_woman_reading_strength_sweep.png)
-
-## Citation / links
+## Links
 
 - **Pipeline repo:** https://github.com/adamscohn2646/mlx-local-lora-create
 - **Test prompts:** https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml
-- **Base model (mflux 4-bit):** https://huggingface.co/filipstrand/Z-Image-Turbo-mflux-4bit
+- **Base model:** https://huggingface.co/filipstrand/Z-Image-Turbo-mflux-4bit
 - **mflux:** https://github.com/filipstrand/mflux
