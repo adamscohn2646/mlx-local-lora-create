@@ -28,19 +28,26 @@ hf auth login
 
 ### 3. Stage files
 
+Prefer **`bash ~/hf-lilien-lora/upload.sh`** — copies the model card, weights, and **calibration harness** images from the latest `test_runs/lilien_z_image_turbo_v1__calibration__*` run (`lora_1.00/`, seed 42).
+
+Manual staging:
+
 ```bash
 STAGE=~/hf-lilien-lora
-mkdir -p "$STAGE/samples"
+REPO="/path/to/mlx-local-lora-create"
+RUN=$(ls -td "$REPO"/test_runs/lilien_z_image_turbo_v1__calibration__* | head -1)
 
+mkdir -p "$STAGE/samples/grids"
 cp ~/loras/lilien_z_image_turbo_v1/lilien_z_image_turbo_v1.safetensors "$STAGE/"
-cp docs/huggingface/lilien-jugendstil-z-image-turbo/README.md "$STAGE/README.md"
+cp "$REPO/docs/huggingface/lilien-jugendstil-z-image-turbo/README.md" "$STAGE/README.md"
 
-# Optional sample images (generated outputs, not training scans)
-cp ~/loras/lilien_z_image_turbo_v1/smoke_lora.png "$STAGE/samples/"
-cp ~/loras/lilien_z_image_turbo_v1/smoke_lora_1.png "$STAGE/samples/"
+# Calibration outputs (not post-train smoke PNGs)
+cp "$RUN/lora_1.00/style_generic/style_woman_reading__0__seed42.png" "$STAGE/samples/style_woman_reading.png"
+cp "$RUN/lora_1.00/jewish_iconography/jacob_wrestling__0__seed42.png" "$STAGE/samples/jacob_wrestling.png"
+# ... other calibration prompts + grids/ from the same run
 ```
 
-Edit `$STAGE/README.md` gallery section to embed `samples/*.png` after copying.
+Prompt text in the model card must match [`config/prompts/lilien_prompts.yaml`](../../config/prompts/lilien_prompts.yaml).
 
 Sanitized stats (optional):
 

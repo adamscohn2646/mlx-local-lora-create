@@ -40,7 +40,7 @@ art by Ephraim Moshe Lilien, Jugendstil illustration,
 | Parameter | Value |
 |-----------|-------|
 | Base model | `filipstrand/Z-Image-Turbo-mflux-4bit` |
-| LoRA scale | **0.8–1.0** (try 0.6–1.2; 1.0 is the default calibration reference) |
+| LoRA scale | **0.8–1.0** (calibration sweeps 0.6–1.2; 1.0 is the reference strength) |
 | Resolution | 1024 × 1024 |
 | Steps | 9 |
 | Guidance | 0.0 |
@@ -54,8 +54,8 @@ pip install mflux
 mflux-generate-z-image-turbo \
   --model filipstrand/Z-Image-Turbo-mflux-4bit \
   --lora-paths AdamSCohn/lilien-jugendstil-z-image-turbo \
-  --lora-scales 0.8 \
-  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, black ink on cream paper, Jugendstil ornamental border" \
+  --lora-scales 1.0 \
+  --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on, black ink on cream paper, Jugendstil ornamental border" \
   --width 1024 \
   --height 1024 \
   --steps 9 \
@@ -69,7 +69,7 @@ Local file instead of Hub path:
 mflux-generate-z-image-turbo \
   --model filipstrand/Z-Image-Turbo-mflux-4bit \
   --lora-paths /path/to/lilien_z_image_turbo_v1.safetensors \
-  --lora-scales 0.8 \
+  --lora-scales 1.0 \
   --prompt "art by Ephraim Moshe Lilien, Jugendstil illustration, ..." \
   --width 1024 --height 1024 --steps 9
 ```
@@ -84,13 +84,13 @@ model = ZImage(
     model_config=ModelConfig.z_image_turbo(),
     model_path="filipstrand/Z-Image-Turbo-mflux-4bit",
     lora_paths=["AdamSCohn/lilien-jugendstil-z-image-turbo"],
-    lora_scales=[0.8],
+    lora_scales=[1.0],
 )
 image = model.generate_image(
     seed=42,
     prompt=(
         "art by Ephraim Moshe Lilien, Jugendstil illustration, "
-        "a bearded man in profile with striped head covering, "
+        "a young woman seated by a window reading a book, "
         "black ink on cream paper, Jugendstil ornamental border"
     ),
     num_inference_steps=9,
@@ -102,16 +102,48 @@ image.save("lilien_sample.png")
 
 ## Example prompts
 
-```
-art by Ephraim Moshe Lilien, Jugendstil illustration, Jacob wrestling an angel at night, dramatic diagonal composition, black ink on cream paper, Jugendstil ornamental border
-```
+These match the **calibration subset** in [`config/prompts/lilien_prompts.yaml`](https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml) (compiled from `lilien_themes.yaml`). Gallery images below were generated from this same set.
+
+**style_generic — `style_woman_reading__0`**
 
 ```
-art by Ephraim Moshe Lilien, Jugendstil illustration, decorative Rosh Hashanah greeting card with pomegranates and flowing vines, black ink on cream paper
+art by Ephraim Moshe Lilien, Jugendstil illustration, a young woman seated by a window reading a book, black ink on cream paper, Jugendstil ornamental border
 ```
 
+**jewish_iconography — `jacob_wrestling__0`**
+
 ```
-art by Ephraim Moshe Lilien, Jugendstil illustration, tarot-style figure of a magician at an altar, symbolic objects arranged symmetrically, black ink on cream paper
+art by Ephraim Moshe Lilien, Jugendstil illustration, A man in long robes with a detailed pattern wrestling, arms length, a winged figure at night beside a flowing river. Palm trees in background, locked arms at the shoulder, winged figure is trying to escape, the man holds on, black ink on cream paper, Jugendstil ornamental border
+```
+
+**tarot — `tarot_magician__0`**
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, A man in a robe standing behind a table, his arm raising a rough hewn wand, held in his fist in a majestic gesture. On the table are are a plate wth a star of david inscribed on it, an ornate cup and a ceremonial knife, black ink on cream paper, Jugendstil ornamental border
+```
+
+**ornament — `ornament_rosh_hashanah__0`**
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, Ornamental border for a Jewish greeting card integrating Jewish symbols such as a star of david, black ink on cream paper, Jugendstil ornamental border
+```
+
+**out_of_distribution — `ood_astronaut__0`**
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, an astronaut standing on the moon, full figure, stark silhouette, black ink on cream paper, Jugendstil ornamental border
+```
+
+**composition — `composition_group_table__0`**
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, four figures seated around a table in animated discussion, black ink on cream paper, Jugendstil ornamental border
+```
+
+**fantasy_mythic — `vampire_fantasy__0`**
+
+```
+art by Ephraim Moshe Lilien, Jugendstil illustration, a gaunt vampire leaning over a craftsman at a work table, heavy ink shadows, black ink on cream paper, Jugendstil ornamental border
 ```
 
 ## Training summary
@@ -153,14 +185,28 @@ Trained on ~49 illustrations in the style of Ephraim Moshe Lilien (d. 1925). Sou
 
 ## Gallery
 
-![Woman reading by window — LoRA scale ~1.0](samples/smoke_lora.png)
+Calibration harness run (`lora_test`, mode `calibration`), **LoRA strength 1.0**, seed **42**, 1024×1024, 9 steps. Not original training scans.
 
-![Portrait study — LoRA scale ~1.0](samples/smoke_lora_1.png)
+| | |
+|---|---|
+| ![style_woman_reading](samples/style_woman_reading.png) | ![jacob_wrestling](samples/jacob_wrestling.png) |
+| `style_woman_reading__0` | `jacob_wrestling__0` |
+| ![tarot_magician](samples/tarot_magician.png) | ![ornament_rosh_hashanah](samples/ornament_rosh_hashanah.png) |
+| `tarot_magician__0` | `ornament_rosh_hashanah__0` |
+| ![ood_astronaut](samples/ood_astronaut.png) | ![vampire_fantasy](samples/vampire_fantasy.png) |
+| `ood_astronaut__0` | `vampire_fantasy__0` |
+| ![composition_group_table](samples/composition_group_table.png) | |
+| `composition_group_table__0` | |
 
-Sample images generated with mflux + Z-Image-Turbo 4-bit (not original training scans).
+**Strength sweep** (base → 0.6 → 0.8 → 1.0 → 1.2):
+
+![Jacob wrestling strength sweep](samples/grids/jacob_wrestling_strength_sweep.png)
+
+![Woman reading strength sweep](samples/grids/style_woman_reading_strength_sweep.png)
 
 ## Citation / links
 
 - **Pipeline repo:** https://github.com/adamscohn2646/mlx-local-lora-create
+- **Test prompts:** https://github.com/adamscohn2646/mlx-local-lora-create/blob/main/config/prompts/lilien_prompts.yaml
 - **Base model (mflux 4-bit):** https://huggingface.co/filipstrand/Z-Image-Turbo-mflux-4bit
 - **mflux:** https://github.com/filipstrand/mflux
